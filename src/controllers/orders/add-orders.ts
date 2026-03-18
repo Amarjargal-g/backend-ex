@@ -1,47 +1,64 @@
+import { Status } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 import { type Request, type Response } from "express";
-type FoodOrder = {
-  foodOrderId: any;
+
+type OrderItems = {
   foodId: number;
   quantity: number;
 };
 type BodyType = {
-  foods: FoodOrder[];
+  orderItems: OrderItems[];
 };
 
 export const addOrders = async (req: Request, res: Response) => {
-  const { foods }: BodyType = req.body;
+  const { orderItems }: BodyType = req.body;
+  const totalPrice = await calcTotalPrice(orderItems);
+  const params = req.params;
   try {
-    // const f = foods.map((food)=>food.foodId)
-    // const foo = await prisma.food.findMany({
-    //     where:{
-    //         id:{
-    //             in:f,
-    //         }
-    //     }
-    // })
-    // console.log({foo});
-    // res.send("ok");
-    // return
-
     const orders = await prisma.foodOrder.create({
       data: {
-        status: "pending",
-        totalPrice: "100",
+        userId: Number(params.userId),
+        status: Status.PENDING,
+        totalPrice: totalPrice,
+        foodOrderItems: {
+          create: orderItems,
+        },
       },
     });
-
-    const foodsWithOrderId = foods.map((food) => ({
-      ...food,
-      foodOrderId: orders.id,
-    }));
-
-    const orderItem = await prisma.foodOrderItem.createMany({
-      data: foodsWithOrderId,
-    });
-    res.json({ orders, orderItem });
+    res.json({ orders });
   } catch (error) {
     console.log(error);
     res.send(error);
   }
+};
+
+const calcTotalPrice = async (orderItems: OrderItems[]) => {
+  const foodIds = orderItems.map((orderItem) => orderItem.foodId);
+
+  const foods = await findFoodsByIds(foodIds);
+
+  const foodWithQuantity = foods.map((food) => {
+    const foundedOrderItem = orderItems.find(
+      (orderItem) => orderItem.foodId === food.id,
+    );
+
+    return { ...food, quantity: foundedOrderItem?.quantity };
+  });
+
+  const totalPrice = foodWithQuantity.reduce((acc, curr) => {
+    return acc + Number(curr.price) * Number(curr.quantity);
+  }, 0);
+
+  return totalPrice.toString();
+};
+
+const findFoodsByIds = async (foodIds: number[]) => {
+  const foods = await prisma.food.findMany({
+    where: {
+      id: {
+        in: foodIds,
+      },
+    },
+  });
+  return foods;
 };

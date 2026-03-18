@@ -1,12 +1,14 @@
-import express, { Express } from "express";
+import express from "express";
 import { getCategories } from "../controllers/categories/get-categories";
-import { createCategories } from "../controllers/categories/create-categories";
+import { addCategories } from "../controllers/categories/add-categories";
 import { updateCategories } from "../controllers/categories/update.categories";
 import { deleteCategories } from "../controllers/categories/delete-categories";
+import { getCategoriesById } from "../controllers/categories/get-categories-by-id";
 
 export const categoryRouter = express.Router();
 
 categoryRouter.post("/", getCategories);
-categoryRouter.get("/", createCategories);
+categoryRouter.get("/", addCategories);
+categoryRouter.get("/:id", getCategoriesById);
 categoryRouter.put("/:id", updateCategories);
 categoryRouter.delete("/:id", deleteCategories);

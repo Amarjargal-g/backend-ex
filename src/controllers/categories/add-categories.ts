@@ -1,6 +1,6 @@
 import { prisma } from "../../lib/prisma";
 import { type Request, type Response } from "express";
-export const createCategories = async (req: Request, res: Response) => {
+export const addCategories = async (req: Request, res: Response) => {
   const { name } = req.body;
   try {
     const category = await prisma.foodCategory.create({

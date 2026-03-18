@@ -13,6 +13,11 @@ datasource db {
   // url      = env("DATABASE_URL")
 }
 
+enum Status {
+  PENDING
+  CANCELED
+  DELIVERED
+}
 
 enum Role {
   USER
@@ -22,11 +27,13 @@ enum Role {
 
 model User {
   id        Int      @id @default(autoincrement())
-  name  String
+  name      String
   email     String   @unique
   password  String
   age       Int
   role  Role   @default(USER)
+
+  orders FoodOrder[]
 }
 
 model Food {
@@ -50,11 +57,14 @@ model FoodCategory {
 
 model FoodOrder {
   id            Int      @id @default(autoincrement())
+  userId        Int
   totalPrice    String
-  status        String
+  status        Status @default(PENDING)
   foodOrderItems     FoodOrderItem[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  user User  @relation(fields: [userId], references: [id])
 }
 
 
