@@ -1,21 +1,12 @@
+import { Status } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
+import { type Request, type Response } from "express";
 
-type Data = {
-  status: String;
-  totalPrice: String;
-};
-
-export const deleteOrders = async ({ status, totalPrice }: Data) => {
-  try {
-    const result = await prisma.foodOrder.deleteMany({
-      where: {
-        status: "string",
-        totalPrice: "string",
-      },
-    });
-
-    return result;
-  } catch (error) {
-    throw Error("idk");
-  }
+export const deleteOrders = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const deleteOrder = await prisma.foodOrder.delete({
+    where: { id: 2 },
+    // data: { status: Status.CANCELED },
+  });
+  res.json({ deleteOrder });
 };
