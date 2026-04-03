@@ -23,19 +23,22 @@ app.get("/users/:id", async (req: Request, res: Response) => {
 });
 
 app.post("/users", async (req: Request, res: Response) => {
-  const { email, age, password } = req.body as {
+  const { email, age, password, name } = req.body as {
     email?: unknown;
     age?: unknown;
     password?: unknown;
+    name?: unknown;
   };
 
   if (
     typeof email !== "string" ||
     typeof password !== "string" ||
-    typeof age !== "number"
+    typeof age !== "number" ||
+    typeof name !== "string"
   ) {
     return res.status(400).json({
-      error: "email (string), password (string) and age (number) are required",
+      error:
+        "email (string), password (string), name (string) and age (number) are required",
     });
   }
 
@@ -43,6 +46,7 @@ app.post("/users", async (req: Request, res: Response) => {
     const user = await prisma.user.create({
       data: {
         email,
+        name,
         password,
         age,
       },
@@ -84,6 +88,13 @@ app.delete("/users/:id", async (req: Request, res: Response) => {
   } catch (error) {
     res.status(404).json({ error: "User not found" });
   }
+});
+
+app.get("/categories", async (req: Request, res: Response) => {
+  const categories = await prisma.foodCategory.findMany({
+    include: { foods: true },
+  });
+  res.json(categories);
 });
 
 app.listen(PORT, () => {
