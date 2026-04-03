@@ -24,12 +24,12 @@ export const FoodCard = (props: FoodCardProps) => {
   }
 
   return (
-    <div className="w-full overflow-hidden rounded-2xl bg-white shadow-sm">
-      <div className="relative">
+    <div className="w-[397.33px] overflow-hidden rounded-2xl bg-white shadow-sm">
+      <div>
         <img
           src={food.image}
           alt={food.name}
-          className="h-44 w-full object-cover"
+          className="ml-4 h-52.5 w-[365.33px] rounded-3xl object-cover p-3"
         />
 
         <button
