@@ -1,7 +1,14 @@
+import { SignIn } from "./dashboard/_components/Sign-In";
+
 export default function Page() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold p-6">Main page?</h1>
+    <div className="flex justify-between">
+      <div>
+        <SignIn email={""} password={""} />
+      </div>
+      <div>
+        <img src="/loginpic.png" alt="pic" />
+      </div>
     </div>
   );
 }

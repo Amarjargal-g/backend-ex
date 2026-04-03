@@ -53,6 +53,7 @@ export const FoodAddDialog = ({ categories }: FoodAddDialogProps) => {
     try {
       await fetch(`http://localhost:8080/foods`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: food.foodName,

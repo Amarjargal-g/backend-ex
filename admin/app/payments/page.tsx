@@ -1,20 +1,20 @@
 import { columns, Payment } from "./columns";
 import { DataTable } from "./data-table";
 
-async function getData(): Promise<Payment[]> {
-  const getData = await fetch(`http://localhost:8080/orders/userId`);
-  return [
-    // {
-    //   id: "string",
-    //   email: "string",
-    //   amount: 0,
-    //   date: 0,
-    // },
-  ];
+async function getData(userId: string): Promise<Payment[]> {
+  const response = await fetch(`http://localhost:8080/orders/${userId}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch orders");
+  }
+
+  const data = await response.json();
+  return data;
 }
 
-export default async function DemoPage() {
-  const data = await getData();
+export default async function OrdersPage() {
+  const userId = "your-user-id-here"; // replace with real user ID (e.g. from session/auth)
+  const data = await getData(userId);
 
   return (
     <div className="container mx-auto py-10">

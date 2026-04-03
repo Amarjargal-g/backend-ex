@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { AddCategory } from "./AddCategory";
+import { cookies } from "next/headers";
 
 export interface Food {
   id: number;
@@ -19,8 +20,13 @@ export interface Category {
 }
 
 export async function Categories() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
   const res = await fetch(`http://localhost:8080/categories`, {
-    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   const categories: Category[] = await res.json();
 

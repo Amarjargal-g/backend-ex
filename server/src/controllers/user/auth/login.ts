@@ -6,28 +6,27 @@ import jwt from "jsonwebtoken";
 export const Login = async (req: Request, res: Response) => {
   const JWT_SECRET = process.env.JWT_SECRET;
   const { email, password } = req.body;
+
   const user = await prisma.user.findUnique({
     where: { email },
   });
-  if (!user) return res.status(404).send({ message: "User not found" });
+
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  if (!user.password)
+    return res.status(400).json({ message: "Invalid credentials" });
 
   const isMatch = await bcrypt.compare(password, user.password);
 
-  if (isMatch === true) {
-    const accessToken = jwt.sign(
-      {
-        data: {
-          userId: user.id,
-          email: user.email,
-          role: user.role,
-        },
-      },
-      JWT_SECRET!,
-      { expiresIn: "1h" },
-    );
+  if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    res.status(200).json({ accessToken });
-  } else {
-    res.status(400).json({ message: "invalid" });
-  }
+  const accessToken = jwt.sign(
+    {
+      data: { userId: user.id, email: user.email, role: user.role },
+    },
+    JWT_SECRET!,
+    { expiresIn: "24h" },
+  );
+
+  return res.status(200).json({ accessToken });
 };

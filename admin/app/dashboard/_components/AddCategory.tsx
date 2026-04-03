@@ -14,8 +14,6 @@ import { Button } from "@/components/ui/button";
 import { LoaderCircle, Plus } from "lucide-react";
 import { ChangeEventHandler, useState } from "react";
 
-const API_BASE = "http://localhost:8080";
-
 export const AddCategory = () => {
   const [open, setOpen] = useState(false);
   const [categoryName, setCategoryName] = useState("");
@@ -29,8 +27,9 @@ export const AddCategory = () => {
     if (!categoryName.trim()) return;
     setLoading(true);
     try {
-      await fetch(`${API_BASE}/categories`, {
+      await fetch(`http://localhost:8080/categories`, {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: categoryName }),
       });
