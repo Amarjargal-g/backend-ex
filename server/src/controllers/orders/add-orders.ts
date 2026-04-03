@@ -11,13 +11,14 @@ type BodyType = {
 };
 
 export const addOrders = async (req: Request, res: Response) => {
+  const userId = req.user?.userId;
   const { orderItems }: BodyType = req.body;
   const totalPrice = await calcTotalPrice(orderItems);
-  const params = req.params;
+
   try {
     const orders = await prisma.foodOrder.create({
       data: {
-        userId: Number(params.userId),
+        userId: Number(userId),
         status: Status.PENDING,
         totalPrice: totalPrice,
         foodOrderItems: {
