@@ -6,6 +6,7 @@
 
 generator client {
   provider        = "prisma-client-js"
+
  
 }
 
@@ -36,6 +37,7 @@ model Food {
     price String
     category FoodCategory @relation(fields:[foodCategoryId], references: [id])
     foodCategoryId Int
+    foodOrderItems FoodOrderItem[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -47,5 +49,26 @@ model FoodCategory {
   foods     Food[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model FoodOrder {
+  id            Int      @id @default(autoincrement())
+  totalPrice    String
+  status        String
+  foodOrderItems     FoodOrderItem[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+model FoodOrderItem {
+  id          Int      @id @default(autoincrement())
+  quantity    Int
+  food        Food @relation(fields: [foodId], references: [id])
+  foodId      Int
+  order       FoodOrder @relation(fields: [foodOrderId],references: [id])
+  foodOrderId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
