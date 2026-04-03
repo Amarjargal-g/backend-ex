@@ -28,7 +28,7 @@ export function AppSidebar() {
           >
             <div className="flex gap-2">
               <img src="/dashboard.svg" alt="dashboard" />
-              <p>Foods Menu</p>
+              <p className="text-xl font-medium">Foods Menu</p>
             </div>
           </Link>
 
@@ -38,7 +38,17 @@ export function AppSidebar() {
           >
             <div className="flex gap-2">
               <img src="/truck.svg" alt="truck" />
-              <p>Orders</p>
+              <p className="text-xl font-medium">Orders</p>
+            </div>
+          </Link>
+
+          <Link
+            href="/dashboard/foods"
+            // className={`${pathname === "/dashboard/foods" ? "bg-black text-white text-xl text-bold rounded-3xl p-2 ml-2" : ""}`}
+          >
+            <div className="flex gap-2">
+              <img src="/settings.svg" alt="dashboard" />
+              <p className="text-xl font-medium">Settings</p>
             </div>
           </Link>
         </div>

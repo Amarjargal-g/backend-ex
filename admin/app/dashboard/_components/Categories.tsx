@@ -29,10 +29,10 @@ export async function Categories() {
       <div className="flex flex-wrap gap-2 items-center">
         <Badge
           variant="default"
-          className="cursor-pointer rounded-full px-4 py-1 text-sm"
+          className="cursor-pointer rounded-full px-4 py-1 text-xl w-36.25 h-9"
         >
           All Dishes
-          <span className="ml-2 bg-black text-white rounded-full px-2">
+          <span className="ml-2 bg-black text-white text-xl rounded-full px-2">
             {categories.reduce((a, c) => a + c.foods.length, 0)}
           </span>
         </Badge>
@@ -41,10 +41,10 @@ export async function Categories() {
           <Badge
             key={category.id}
             variant="outline"
-            className="cursor-pointer rounded-full px-4 py-1 text-sm"
+            className="cursor-pointer rounded-full px-4 py-1 text-xl w-36.25 h-9"
           >
             {category.name}
-            <span className="ml-2 bg-black text-white rounded-full px-2 text-xs">
+            <span className="ml-2 bg-black text-white font-bold rounded-full px-2 text-xs">
               {category.foods.length}
             </span>
           </Badge>

@@ -20,16 +20,23 @@ import {
 } from "@/components/ui/select";
 import { ChangeEventHandler, useState } from "react";
 import { Category } from "./Categories";
-import { LoaderCircle } from "lucide-react";
+import { DeleteIcon, LoaderCircle, TrashIcon } from "lucide-react";
 
 type FoodAddDialogProps = {
   categories: Category[];
 };
 
+type Food = {
+  foodName: string;
+  price: string;
+  categoryId: number | null;
+  ingredients: string;
+};
+
 export const FoodAddDialog = ({ categories }: FoodAddDialogProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [food, setFood] = useState({
+  const [food, setFood] = useState<Food>({
     foodName: "",
     price: "",
     categoryId: null,
@@ -58,7 +65,6 @@ export const FoodAddDialog = ({ categories }: FoodAddDialogProps) => {
       setOpen(false);
     } catch (error) {
       console.error(error);
-    } finally {
       setLoading(false);
     }
   };
@@ -82,8 +88,10 @@ export const FoodAddDialog = ({ categories }: FoodAddDialogProps) => {
           </DialogHeader>
 
           <div className="grid gap-3">
-            <div>
-              <Label htmlFor="foodName">Food Name</Label>
+            <div className="flex gap-2">
+              <Label htmlFor="foodName" className="text-gray-400">
+                Dish Name
+              </Label>
               <Input
                 id="foodName"
                 name="foodName"
@@ -91,27 +99,9 @@ export const FoodAddDialog = ({ categories }: FoodAddDialogProps) => {
                 value={food.foodName}
               />
             </div>
-            <div>
-              <Label htmlFor="price">Food Price</Label>
-              <Input
-                id="price"
-                name="price"
-                type="number"
-                onChange={handleChange}
-                value={food.price}
-              />
-            </div>
-            <div>
-              <Label htmlFor="ingredients">Ingredients</Label>
-              <Input
-                id="ingredients"
-                name="ingredients"
-                onChange={handleChange}
-                value={food.ingredients}
-              />
-            </div>
-            <div>
-              <Label>Category</Label>
+
+            <div className="flex gap-2">
+              <Label className="text-gray-400">Category</Label>
               <Select
                 value={food.categoryId}
                 onValueChange={(val) => setFood({ ...food, categoryId: val })}
@@ -128,22 +118,54 @@ export const FoodAddDialog = ({ categories }: FoodAddDialogProps) => {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label htmlFor="image">Food Image</Label>
+
+            <div className="flex gap-2">
+              <Label htmlFor="ingredients" className="text-gray-400">
+                Ingredients
+              </Label>
+              <Input
+                id="ingredients"
+                name="ingredients"
+                onChange={handleChange}
+                value={food.ingredients}
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <Label htmlFor="price" className="text-gray-400">
+                Price
+              </Label>
+              <Input
+                id="price"
+                name="price"
+                type="number"
+                onChange={handleChange}
+                value={food.price}
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <Label htmlFor="image" className="text-gray-400">
+                Dish Image
+              </Label>
               <Input id="image" name="image" type="file" />
             </div>
           </div>
 
-          <DialogFooter className="sm:justify-end">
+          <DialogFooter className="sm:justify-between">
             <DialogClose
               render={
                 <Button type="button" variant="outline">
-                  Cancel
+                  <TrashIcon className="text-red-500 " />
                 </Button>
               }
             ></DialogClose>
             <Button type="button" onClick={handleSubmit} disabled={loading}>
-              {loading ? <LoaderCircle className="animate-spin" /> : "Add Dish"}
+              {loading ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                "Save Changes"
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>

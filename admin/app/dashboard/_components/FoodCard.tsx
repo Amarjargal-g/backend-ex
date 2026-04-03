@@ -19,7 +19,7 @@ export const FoodCard = ({ category, allCategories }: FoodCardProps) => {
     <div className="bg-white border rounded-2xl w-292.75 p-4 ml-4 m-6">
       <Label className="text-bold text-3xl ml-2">{category.name}</Label>
       <div className="flex flex-wrap gap-4 p-2">
-        <Card className="w-[270.75px] h-60.25 border border-red-500 border-dashed">
+        <Card className="w-[270.75px] h-60.25 dashed-border">
           <FoodAddDialog categories={allCategories} />
         </Card>
 

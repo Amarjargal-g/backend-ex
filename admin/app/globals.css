@@ -127,3 +127,46 @@
     @apply font-sans;
   }
 }
+
+.dashed-border {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      #ef4444,
+      #ef4444 8px,
+      transparent 8px,
+      transparent 16px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #ef4444,
+      #ef4444 8px,
+      transparent 8px,
+      transparent 16px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      #ef4444,
+      #ef4444 8px,
+      transparent 8px,
+      transparent 16px
+    ),
+    repeating-linear-gradient(
+      270deg,
+      #ef4444,
+      #ef4444 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  background-size:
+    2px 100%,
+    100% 2px,
+    2px 100%,
+    100% 2px;
+  background-position:
+    0 0,
+    0 0,
+    100% 0,
+    0 100%;
+  background-repeat: no-repeat;
+}
