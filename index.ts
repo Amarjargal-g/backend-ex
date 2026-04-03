@@ -1,84 +1,90 @@
 import express, { type Request, type Response } from "express";
-import { createNewFile } from "./utils/create-new-file.js";
-import { getBooks } from "./utils/get-books.js";
-import { updatedBook } from "./utils/updated-book.js";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-// type Task = {
-//   id: number;
-//   task: string;
-//   isDone: boolean;
-// };
-// let tasks: Task[] = [];
 const app = express();
 const PORT = 8080;
 
 app.use(express.json());
 
-app.get("/student/:name", (req: Request, res: Response) => {
-  const name = "Bat";
-  res.send(`Сайн байна уу ${name}`);
+app.get("/users", async (_req: Request, res: Response) => {
+  const users = await prisma.user.findMany();
+  res.json({ users });
 });
 
-app.get("/filter", (req: Request, res: Response) => {
-  const { city, age } = req.query;
-
-  res.send({ city: city, age: age });
+app.get("/users/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = await prisma.user.findFirst({
+    where: {
+      id: Number(id),
+    },
+  });
+  res.json({ user });
 });
 
-app.post("/create", async (req: Request, res: Response) => {
+app.post("/users", async (req: Request, res: Response) => {
+  const { email, age, password } = req.body as {
+    email?: unknown;
+    age?: unknown;
+    password?: unknown;
+  };
+
+  if (
+    typeof email !== "string" ||
+    typeof password !== "string" ||
+    typeof age !== "number"
+  ) {
+    return res.status(400).json({
+      error: "email (string), password (string) and age (number) are required",
+    });
+  }
+
   try {
-    const result = await createNewFile();
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(400).json({ message: err });
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password,
+        age,
+      },
+    });
+    res.json({ user });
+  } catch (error) {
+    res.status(500).json({ error });
   }
 });
 
-app.get("/books", async (req: Request, res: Response) => {
-  const books = await getBooks();
-  res.status(200).json({ message: "Success", data: books });
+app.put("/users/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const user = await prisma.user.update({
+      where: { id: Number(id) },
+      data: {
+        ...(req.body.email !== undefined && { email: req.body.email }),
+        ...(req.body.password !== undefined && { password: req.body.password }),
+        ...(req.body.age !== undefined && { age: req.body.age }),
+        ...(req.body.name !== undefined && { name: req.body.name }),
+      },
+    });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update user" });
+  }
 });
 
-app.put("/update", async (req: Request, res: Response) => {
-  const updatedBoos = await updatedBook();
+app.delete("/users/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    await prisma.user.delete({
+      where: { id: Number(id) },
+    });
+    res.json({ message: "deleted successfully" });
+  } catch (error) {
+    res.status(404).json({ error: "User not found" });
+  }
 });
-
-// app.post("/add-todo", (req: Request, res: Response) => {
-//   const { task } = req.body as { task: string };
-//   const newTaskId = tasks.length + 1;
-//   const newTask: Task = { id: newTaskId, task, isDone: false };
-
-//   tasks.push(newTask);
-//   res.status(201).send(newTask);
-// });
-
-// app.put("/update-todo/:id", (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const { task, isDone } = req.body as Partial<Pick<Task, "task" | "isDone">>;
-
-//   const taskId = Number(id);
-//   const existing = tasks.find((t) => t.id === taskId);
-//   if (!existing) {
-//     return res.status(404).send({ error: "Task not found" });
-//   }
-
-//   if (typeof task === "string") existing.task = task;
-//   if (typeof isDone === "boolean") existing.isDone = isDone;
-
-//   res.send(existing);
-// });
-
-// app.delete("/delete-todo/:id", (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const foundTask = tasks.map((task) => String(task.id) === id);
-
-//   if (!foundTask) {
-//     res.status(404).send("not found");
-//   }
-//   const filtertask = tasks.filter((task) => String(task.id) !== id);
-//   tasks = filtertask;
-//   res.status(200).send({ massage: "Success", tasks });
-// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
