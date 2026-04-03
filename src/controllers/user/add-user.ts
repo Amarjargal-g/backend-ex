@@ -1,18 +1,13 @@
-import { hash } from "crypto";
+import { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import bcrypt from "bcrypt";
 
-type User = {
-  email: string;
-  age: number;
-  password: string;
-  name: string;
-};
-
-export const addUser = async ({ email, age, password, name }: User) => {
+export const addUser = async (req: Request, res: Response) => {
+  const { email, age, password, name } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
-    const user = prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         email,
         age,
@@ -20,8 +15,13 @@ export const addUser = async ({ email, age, password, name }: User) => {
         name,
       },
     });
-    return user;
+    res.status(200).json({
+      message: "success",
+      data: user,
+    });
   } catch (err) {
-    throw new Error("Something went wrong");
+    res.status(500).json({
+      message: `Something happened ${err}`,
+    });
   }
 };

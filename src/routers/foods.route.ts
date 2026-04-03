@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express from "express";
 
 import { addFoods } from "../controllers/foods/add-foods";
 import { updateFoods } from "../controllers/foods/update.foods";
