@@ -12,7 +12,7 @@ export default function SidebarLayout({
     <SidebarProvider>
       <AppSidebar />
       <main>
-        <SidebarTrigger />
+        {/* <SidebarTrigger /> */}
         {children}
       </main>
     </SidebarProvider>

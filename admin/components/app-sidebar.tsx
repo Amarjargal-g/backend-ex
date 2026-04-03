@@ -24,20 +24,17 @@ export function AppSidebar() {
         <div className="flex flex-col gap-5 p-5">
           <Link
             href="/dashboard/foods"
-            className={
-              '${pathname === "/dashboard/foods" && "bg-black text-white" }'
-            }
+            className={`${pathname === "/dashboard/foods" ? "bg-black text-white text-xl text-bold rounded-3xl p-2 ml-2" : ""}`}
           >
             <div className="flex gap-2">
               <img src="/dashboard.svg" alt="dashboard" />
-              <p>Foods</p>
+              <p>Foods Menu</p>
             </div>
           </Link>
+
           <Link
             href="/dashboard/orders"
-            className={
-              '${pathname === "/dashboard/orders" && "bg-black text-white"}'
-            }
+            className={`${pathname === "/dashboard/orders" ? "bg-black text-white text-xl text-bold rounded-3xl p-2 ml-2" : ""}`}
           >
             <div className="flex gap-2">
               <img src="/truck.svg" alt="truck" />

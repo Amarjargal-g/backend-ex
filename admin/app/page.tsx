@@ -1,11 +1,7 @@
-import SidebarLayout from "@/components/sidebar-layout";
-
-const Page = () => {
+export default function Page() {
   return (
     <div>
-      <SidebarLayout children={undefined} />
+      <h1 className="text-2xl font-bold p-6">Welcome to the Food Dashboard</h1>
     </div>
   );
-};
-
-export default Page;
+}
