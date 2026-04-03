@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const add_user_1 = require("../controllers/user/add-user");
+const get_user_1 = require("../controllers/user/get-user");
+const update_user_1 = require("../controllers/user/update-user");
+const delete_user_1 = require("../controllers/user/delete-user");
+const get_user_by_id_1 = require("../controllers/user/get-user-by-id");
+const login_1 = require("../controllers/user/auth/login");
+const authMiddleware_1 = require("../controllers/auth/authMiddleware");
+const me_1 = require("../controllers/user/me");
+exports.userRouter = express_1.default.Router();
+exports.userRouter.post("/", add_user_1.addUser);
+exports.userRouter.get("/:id", get_user_1.getUser);
+exports.userRouter.put("/:id", update_user_1.updateUser);
+exports.userRouter.delete("/:id", delete_user_1.deleteUser);
+exports.userRouter.get("/:id", get_user_by_id_1.getUserById);
+exports.userRouter.post("/login", login_1.Login);
+exports.userRouter.get("/auth/me", authMiddleware_1.authMiddleware, me_1.me);

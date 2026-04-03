@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ordersRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const get_orders_1 = require("../controllers/orders/get-orders");
+const get_order_by_id_1 = require("../controllers/orders/get-order-by-id");
+const add_orders_1 = require("../controllers/orders/add-orders");
+const update_orders_1 = require("../controllers/orders/update-orders");
+const delete_orders_1 = require("../controllers/orders/delete-orders");
+const authMiddleware_1 = require("../controllers/auth/authMiddleware");
+const authAdminMiddleware_1 = require("../controllers/auth/authAdminMiddleware");
+exports.ordersRouter = express_1.default.Router();
+exports.ordersRouter.post("/:userId", authMiddleware_1.authMiddleware, add_orders_1.addOrders);
+exports.ordersRouter.get("/", authMiddleware_1.authMiddleware, authAdminMiddleware_1.authAdminMiddleware, get_orders_1.getOrders);
+exports.ordersRouter.get("/:id", authMiddleware_1.authMiddleware, get_order_by_id_1.getOrderById);
+exports.ordersRouter.put("/:id", authMiddleware_1.authMiddleware, update_orders_1.updateOrders);
+exports.ordersRouter.delete("/:id", authMiddleware_1.authMiddleware, delete_orders_1.deleteOrders);
