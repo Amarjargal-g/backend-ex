@@ -1,4 +1,7 @@
 import express, { type Request, type Response } from "express";
+import { createNewFile } from "./utils/create-new-file.js";
+import { getBooks } from "./utils/get-books.js";
+import { updatedBook } from "./utils/updated-book.js";
 
 // type Task = {
 //   id: number;
@@ -20,6 +23,24 @@ app.get("/filter", (req: Request, res: Response) => {
   const { city, age } = req.query;
 
   res.send({ city: city, age: age });
+});
+
+app.post("/create", async (req: Request, res: Response) => {
+  try {
+    const result = await createNewFile();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: err });
+  }
+});
+
+app.get("/books", async (req: Request, res: Response) => {
+  const books = await getBooks();
+  res.status(200).json({ message: "Success", data: books });
+});
+
+app.put("/update", async (req: Request, res: Response) => {
+  const updatedBoos = await updatedBook();
 });
 
 // app.post("/add-todo", (req: Request, res: Response) => {
