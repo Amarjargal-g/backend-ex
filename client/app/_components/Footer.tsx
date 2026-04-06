@@ -45,7 +45,7 @@ export const Footer = () => {
       <div className="ml-25 flex w-316">
         <Separator className="bg-gray-500" />
       </div>
-      <div className="flex justify-evenly p-5 text-[#71717A]">
+      <div className="ml-8 flex justify-start gap-5 p-5 text-[#71717A]">
         <p>Copy right 2026 @ Nomnom LLC</p>
         <p>Privacy Policy</p>
         <p>Terms and condition</p>

@@ -34,7 +34,7 @@ export default async function Home() {
               {category.name}
             </Label>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               {category.foods.map((food) => (
                 <FoodCard key={food.id} food={food} />
               ))}

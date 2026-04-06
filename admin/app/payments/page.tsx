@@ -13,7 +13,7 @@ async function getData(userId: string): Promise<Payment[]> {
 }
 
 export default async function OrdersPage() {
-  const userId = "your-user-id-here"; // replace with real user ID (e.g. from session/auth)
+  const userId = "your-user-id-here";
   const data = await getData(userId);
 
   return (

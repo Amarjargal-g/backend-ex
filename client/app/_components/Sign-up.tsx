@@ -1,17 +1,18 @@
-"use client";
+"use client"
 
-import { Button, Input } from "@base-ui/react";
-import { useState } from "react";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
 
 export const SignUp = (_credentials: { email: string; password: string }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const onSubmit = async () => {
     const credentials = {
       email,
       password,
-    };
+    }
 
     await fetch("/api/users", {
       method: "POST",
@@ -20,21 +21,11 @@ export const SignUp = (_credentials: { email: string; password: string }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
-    });
-    // try {
-    //   const data = await signIn(credentials);
-    //   localStorage.setItem("token", data?.accessToken);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
-
-  //   const getCategoriest = async () => {
-  //     await fetch("/api/categories");
-  //   };
+    })
+  }
 
   return (
-    <div className="flex flex-col justify-center mt-100 ml-50">
+    <div className="mt-100 ml-50 flex flex-col justify-center">
       <Input
         placeholder="email"
         type="email"
@@ -43,14 +34,10 @@ export const SignUp = (_credentials: { email: string; password: string }) => {
       />
       <Input
         placeholder="password"
-        // type="email"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
       />
       <Button onClick={onSubmit}>Sign Up</Button>
-      {/* <Button onClick={getCategoriest} className="border bg-green-300">
-        Get categories
-      </Button> */}
     </div>
-  );
-};
+  )
+}

@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <div className="flex justify-between">
       <div>
-        <SignIn email={""} password={""} />
+        <SignIn />
       </div>
       <div>
         <img src="/loginpic.png" alt="pic" />

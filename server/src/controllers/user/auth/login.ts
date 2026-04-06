@@ -25,7 +25,7 @@ export const Login = async (req: Request, res: Response) => {
       data: { userId: user.id, email: user.email, role: user.role },
     },
     JWT_SECRET!,
-    { expiresIn: "24h" },
+    { expiresIn: "36h" },
   );
 
   return res.status(200).json({ accessToken });

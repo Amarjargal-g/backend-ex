@@ -29,8 +29,8 @@ export function CardSheet() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" className="relative">
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Cart
+          <ShoppingCart className="h-4 w-4" />
+
           {totalItems > 0 && (
             <Badge className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center p-0 text-xs">
               {totalItems}
@@ -50,7 +50,6 @@ export function CardSheet() {
           </SheetTitle>
         </SheetHeader>
 
-        {/* Cart Items */}
         <div className="flex-1 space-y-4 overflow-y-auto py-4">
           {card.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center gap-3 text-muted-foreground">
@@ -60,7 +59,6 @@ export function CardSheet() {
           ) : (
             card.map((item, index) => (
               <div key={index} className="flex items-center gap-3">
-                {/* Food Info */}
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">
                     {item.food.name}
@@ -70,7 +68,6 @@ export function CardSheet() {
                   </p>
                 </div>
 
-                {/* Quantity Controls */}
                 <div className="flex items-center gap-1">
                   <Button
                     variant="outline"
@@ -114,7 +111,6 @@ export function CardSheet() {
           )}
         </div>
 
-        {/* Summary & Footer */}
         {card.length > 0 && (
           <>
             <Separator />

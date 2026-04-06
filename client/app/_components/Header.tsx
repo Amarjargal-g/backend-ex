@@ -1,5 +1,6 @@
 import { AddressButton } from "./AdressButton"
 import { CardSheet } from "./CardSheet"
+import { Status } from "./Status"
 
 export const Header = () => {
   return (
@@ -8,9 +9,10 @@ export const Header = () => {
         <img className="h-[37.29px] w-11.5" src="/logo.svg" alt="logo" />
         <img className="h-11 w-22" src="/text.svg" alt="text" />
       </div>
-      <div className="mr-10 flex gap-1 p-1">
+      <div className="mr-10 flex gap-6 p-1">
         <AddressButton />
         <CardSheet />
+        <Status />
       </div>
     </div>
   )

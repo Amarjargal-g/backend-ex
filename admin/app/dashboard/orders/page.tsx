@@ -1,11 +1,9 @@
 import { columns } from "@/app/payments/columns";
 import { DataTable } from "@/app/payments/data-table";
 
-import { Payment } from "@/app/payments/columns";
-
 import { DatePickerWithRange } from "@/components/date-picker";
 import { MyHeader } from "../_components/MyHeader";
-import { cookies } from "next/headers";
+
 import { getOrders } from "@/app/utils/get-orders";
 
 export default async function OrderPage() {

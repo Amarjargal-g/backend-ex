@@ -25,7 +25,7 @@ export const FoodCard = (props: FoodCardProps) => {
 
   return (
     <div className="w-[397.33px] overflow-hidden rounded-2xl bg-white shadow-sm">
-      <div>
+      <div className="relative">
         <img
           src={food.image}
           alt={food.name}

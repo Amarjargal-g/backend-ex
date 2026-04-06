@@ -5,6 +5,7 @@ import { FoodCard } from "../_components/FoodCard";
 export default async function FoodsPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
+  console.log(token);
 
   const res = await fetch(`http://localhost:8080/categories`, {
     method: "GET",

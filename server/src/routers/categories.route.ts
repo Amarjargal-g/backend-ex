@@ -8,7 +8,7 @@ import { authMiddleware } from "../controllers/auth/authMiddleware";
 
 export const categoryRouter = express.Router();
 
-categoryRouter.get("/", authMiddleware, getCategories);
+categoryRouter.get("/", getCategories);
 categoryRouter.post("/", addCategories);
 categoryRouter.get("/:id", getCategoriesById);
 categoryRouter.put("/:id", updateCategories);
