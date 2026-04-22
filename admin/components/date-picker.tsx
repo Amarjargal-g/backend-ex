@@ -15,9 +15,12 @@ import {
 } from "@/components/ui/popover";
 
 export function DatePickerWithRange() {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(new Date().getFullYear(), 0, 20),
-    to: addDays(new Date(new Date().getFullYear(), 0, 20), 20),
+  const [date, setDate] = React.useState<DateRange | undefined>(() => {
+    const base = new Date(2026, 0, 20);
+    return {
+      from: base,
+      to: addDays(base, 20),
+    };
   });
 
   return (

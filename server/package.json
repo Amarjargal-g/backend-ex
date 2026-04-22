@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "nodemon --exec tsx src/index.ts",
     "build": "prisma generate && tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "set:food-images": "tsx src/scripts/set-food-images.ts",
+    "set:food-images:map": "tsx src/scripts/set-food-images-from-map.ts"
   },
   "keywords": [],
   "author": "",

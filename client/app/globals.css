@@ -127,3 +127,31 @@
     @apply font-sans;
   }
 }
+
+.footer-marquee-track {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  align-items: center;
+  gap: 3rem;
+  padding: 1.25rem 0;
+  animation: footer-marquee 16s linear infinite;
+}
+
+.footer-marquee-text {
+  white-space: nowrap;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@keyframes footer-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}

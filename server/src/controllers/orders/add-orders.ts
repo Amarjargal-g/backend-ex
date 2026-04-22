@@ -8,11 +8,12 @@ type OrderItems = {
 };
 type BodyType = {
   orderItems: OrderItems[];
+  deliveryAddress?: string;
 };
 
 export const addOrders = async (req: Request, res: Response) => {
   const userId = req.user?.userId;
-  const { orderItems }: BodyType = req.body;
+  const { orderItems, deliveryAddress }: BodyType = req.body;
   const totalPrice = await calcTotalPrice(orderItems);
 
   try {
@@ -21,6 +22,7 @@ export const addOrders = async (req: Request, res: Response) => {
         userId: Number(userId),
         status: Status.PENDING,
         totalPrice: totalPrice,
+        deliveryAddress: deliveryAddress?.trim() || null,
         foodOrderItems: {
           create: orderItems,
         },

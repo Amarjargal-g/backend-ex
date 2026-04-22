@@ -4,59 +4,65 @@ import { CardContexts } from "@/app/contexts/CardContext"
 import { Food } from "@/lib/types"
 import { Check, Plus } from "lucide-react"
 import { useContext, useState } from "react"
+import { FoodDialog } from "@/app/_components/FoodDialog"
+import { getCloudinaryImageUrl } from "@/lib/cloudinary"
 
 type FoodCardProps = {
   food: Food
 }
 
-export const FoodCard = (props: FoodCardProps) => {
-  const { food } = props
+export const FoodCard = ({ food }: FoodCardProps) => {
   const [added, setAdded] = useState(false)
+  const [open, setOpen] = useState(false)
   const { addCard } = useContext(CardContexts)
 
-  const onAdd = () => {
-    addCard(food, 1)
+  const onConfirm = (quantity: number) => {
+    addCard(food, quantity)
     setAdded(true)
-  }
-
-  const onRemove = () => {
-    setAdded(false)
+    setOpen(false)
   }
 
   return (
-    <div className="w-[397.33px] overflow-hidden rounded-2xl bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
       <div className="relative">
         <img
-          src={food.image}
+          src={getCloudinaryImageUrl(food.image)}
           alt={food.name}
-          className="ml-4 h-52.5 w-[365.33px] rounded-3xl object-cover p-3"
+          className="h-52 w-full object-cover"
         />
 
         <button
-          onClick={added ? onRemove : onAdd}
-          className={`absolute right-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-full shadow-md transition-colors ${
+          onClick={() => (added ? setAdded(false) : setOpen(true))}
+          className={`absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-full shadow-md ${
             added
               ? "bg-green-500 text-white"
-              : "bg-white text-gray-800 hover:bg-gray-100"
+              : "bg-white text-gray-800"
           }`}
         >
           {added ? <Check size={18} /> : <Plus size={18} />}
         </button>
       </div>
 
-      <div className="p-3">
+      <div className="p-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-red-600">
+          <span className="text-base font-semibold text-red-600">
             {food.name}
           </span>
-          <span className="text-sm font-semibold text-gray-900">
+          <span className="text-base font-semibold text-black">
             ${Number(food.price || 0).toFixed(2)}
           </span>
         </div>
-        <p className="mt-1 line-clamp-2 text-xs leading-snug text-gray-500">
+        <p className="mt-2 line-clamp-2 text-sm leading-snug text-gray-500">
           {food.description}
         </p>
       </div>
+
+      <FoodDialog
+        food={food}
+        open={open}
+        onOpenChange={setOpen}
+        onConfirm={onConfirm}
+      />
     </div>
   )
 }

@@ -63,6 +63,7 @@ model FoodOrder {
   id            Int      @id @default(autoincrement())
   userId        Int
   totalPrice    String
+  deliveryAddress String?
   status        Status @default(PENDING)
   foodOrderItems     FoodOrderItem[]
   createdAt     DateTime @default(now())

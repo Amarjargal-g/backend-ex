@@ -11,7 +11,7 @@ type SignInResponse = {
 };
 
 export const POST = async (req: Request) => {
-  const credentials = await req.json();
+  const credentials = (await req.json()) as Credentials;
   const cookieStore = await cookies();
   const response = await fetch(`http://localhost:8080/users/login`, {
     method: "POST",
@@ -21,7 +21,20 @@ export const POST = async (req: Request) => {
     body: JSON.stringify(credentials),
   });
   const data = (await response.json()) as SignInResponse;
-  cookieStore.set("token", data.accessToken);
+
+  if (!response.ok || !data.accessToken) {
+    return new Response(
+      JSON.stringify({ message: data.message ?? "Invalid credentials" }),
+      {
+        status: response.status || 401,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  }
+
+  cookieStore.set("token", data.accessToken, { path: "/" });
 
   return new Response(JSON.stringify(data), {
     status: 200,

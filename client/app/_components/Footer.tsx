@@ -3,10 +3,12 @@ import { Separator } from "@/components/ui/separator"
 export const Footer = () => {
   return (
     <div className="h-188.75 bg-black">
-      <div className="mt-8 h-23 w-full bg-red-500 p-8 text-white">
-        <h1 className="animate-in duration-700 ease-out fill-mode-forwards slide-in-from-right">
-          Fresh fast delivered
-        </h1>
+      <div className="mt-8 h-23 w-full overflow-hidden bg-red-500 text-white">
+        <div className="footer-marquee-track">
+          <h1 className="footer-marquee-text">Fresh fast delivered</h1>
+          <h1 className="footer-marquee-text">Fresh fast delivered</h1>
+          <h1 className="footer-marquee-text">Fresh fast delivered</h1>
+        </div>
       </div>
       <div className="flex justify-evenly p-20">
         <div>

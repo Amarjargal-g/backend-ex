@@ -16,15 +16,18 @@ export function AddressButton() {
     <div className="rounded-3xl">
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">
-            <div className="flex gap-2">
-              <div className="flex gap-1">
-                <MapPin className="text-red-500" />
-                <p className="text-red-500">Delivery Address:</p>
+          <Button
+            variant="outline"
+            className="hidden h-10 rounded-full border-white/20 bg-white/10 text-white hover:bg-white/20 md:flex"
+          >
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <MapPin className="h-4 w-4 text-red-400" />
+                <p className="text-sm text-red-400">Delivery Address:</p>
               </div>
-              <div className="flex text-gray-300">
+              <div className="flex items-center text-sm text-gray-200">
                 <p>Add Location</p>
-                <ChevronRight />
+                <ChevronRight className="h-4 w-4" />
               </div>
             </div>
           </Button>

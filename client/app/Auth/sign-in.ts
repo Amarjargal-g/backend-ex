@@ -16,5 +16,8 @@ export const signIn = async (credentials: Credentials) => {
     body: JSON.stringify(credentials),
   })
   const data = (await response.json()) as SignInResponse
-  return data
+  return {
+    ok: response.ok,
+    data,
+  }
 }
